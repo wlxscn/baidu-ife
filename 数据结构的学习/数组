@@ -1,0 +1,126 @@
+array.splice(5,3);删除数组索引5开始的3个元素即array[5],array[6]和array[7];
+array.splice(5,0,2,3,4);在索引5前面添加元素2,3,4
+splice方法返回移除的元素数组
+
+
+forEach方法
+['_', 't', 'a', 'n', 'i', 'f', ']'].forEach(function (value, index, array) {
+    this.push(String.fromCharCode(value.charCodeAt() + index + 2))
+}, out = [])//fromCharCode方法接受Unicode码返回字符     charCodeAt返回字符串指定位置的Unicode码
+
+out.join('')
+// <- 'awesome'
+
+
+some方法
+max = -Infinity
+satisfied = [10, 12, 10, 8, 5, 23].some(function (value, index, array) {
+    if (value > max) max = value
+    return value < 10
+})
+
+console.log(max)
+// <- 12
+
+satisfied
+//true
+
+every方法
+与some类似，循环结束发生在return false的时候
+
+concat方法
+.concat 可以传入多个参数: array.concat(val, val2, val3, valn)
+.concat 是可以返回一个新的数组
+array.concat() 如果不传入参数则将会返回一个新的浅拷贝数组。
+浅拷贝意味着副本可以保存着源数组的对象引用。
+
+
+push与pop方法
+function Stack(){
+	this._stack=[];
+}
+Stack.prototype.next=function(){
+	this._stack.pop();
+}
+Stack.prototype.add=function(){
+	this._stack.prototype.push.apply(this._stack,arguments);
+}
+stack = new Stack()
+stack.add(1,2,3)
+stack.next()
+
+
+shift与unshift方法
+function Queue(){
+	this._queue=[];
+}
+Queue.prototype.next=function(){
+	this._queue.unshift();
+}
+Queue.prototype.add = function () {
+    return this._queue.unshift.apply(this._queue, arguments)
+}
+
+queue = new Queue()
+queue.add(1,2,3)
+queue.next()
+
+使用.shift (或.pop) 可以容易地遍历数组。
+list = [1,2,3,4,5,6,7,8,9,10]
+
+while (item = list.shift()) {
+    console.log(item)
+}
+
+map方法
+[97, 119, 101, 115, 111, 109, 101].map(
+  function(value,index,arr){
+    return String.fromCharCode(value)
+  }
+  
+).join('')
+
+filter方法返回一个新数组
+[void 0, null, false, '', 1].filter(function (value) {
+    return value
+})
+
+
+reduce方法
+Array.prototype.sum=function(){
+	this.reduce(function(partial,value){
+        return partial+value;
+	},0)
+}
+[2,3,4,5].sum();
+
+function concat(arr){
+	arr.reduce(function(partial,item){
+	  if(partial){
+	    partial+',';
+	  }
+        return partial+item.value
+	},'');
+}
+concat([
+  {value:'g'},
+  {value:'r'},
+  {value:'b'} 
+]);
+reduce和reduceRight的区别是，reduce 是从数组左到右开始遍历，而reduceRight是从数组右到左开始遍历。
+
+slice方法
+function format (text, bold) {
+    if (bold) {
+        text = '<b>' + text + '</b>'
+    }
+    var values = Array.prototype.slice.call(arguments, 2)
+
+    values.forEach(function (value) {
+        text = text.replace('%s', value)
+    })
+
+    return text
+}
+
+format('some%sthing%s %s', true, 'some', 'other', 'things')

@@ -1,0 +1,23 @@
+flex布局
+父元素属性：
+display:flex;
+决定主轴方向flex-direction:row/row-reverse/column/column-reverse默认为row从左往右;
+决定是否单行排列flex-wrap:nowrap/wrap/wrap-reverse默认为nowrap单行显示;
+flex-flow是flex-direction和flex-wrap的缩写版本;
+对行空白空间的分配justify-content:flex-start/flex-end/center/space-around/space-between默认为flex-start表示从起始方向开始;
+对列空白空间的分配align-content:flex-start/flex-end/center/space-around/space-between;
+表示行中各个伸缩项目的对齐形式align-items:flex-start | flex-end | center | baseline | stretch;
+
+子元素属性：
+单个项目的对齐方式align-self:auto | flex-start | flex-end | center | baseline | stretch;
+伸缩项目的排列顺序：order
+扩展能力flex-grow：0默认为0
+收缩能力flex-shrink:1默认为1
+用来设置伸缩基准值，剩余的空间按比率进行伸缩flex-basis:0/auto;默认为auto对空白空间进行分配,为0则直接分配空间
+flex属性为flex-grow,flex-grow和flex-basis的缩写flex:none;
+参考网址为https://segmentfault.com/a/1190000002910324
+
+
+
+substring(position,position)包含起始位置不包含终点位置
+substr(position,length)

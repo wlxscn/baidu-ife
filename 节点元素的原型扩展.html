@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTMLElement的原型扩展</title>
+</head>
+<body>
+	<div id="parent">
+		<div id="a">I'm go;</div>
+		<div id="b">I'm go too;</div>
+	</div>
+    <script>
+        HTMLElement.prototype.remove=function(){
+          if(this.parentNode){
+          	this.parentNode.removeChild(this);
+          }	
+        }
+        
+        document.getElementById('b').remove();
+        
+    Object.prototype.keys=function(){
+		var keys=[];   
+		for(var key in this){
+		   if(this.hasOwnProperty(key)){//确定属性是对象实例上的还是原型中导入的
+		    keys.push(key);
+		    }
+		}
+        return keys;  
+    }
+    var obj={a:1,b:2,c:3};
+	console.log(obj.keys());
+	
+    Number.prototype.add=function(num){
+    	return this+num
+    }
+     var a=1;
+    console.log(a.add(3));
+
+    function MyArray(){};
+    MyArray.prototype=new Array();
+    var mine=new MyArray();
+    mine.push(1,2,3);
+    console.log(mine);
+   
+	
+    </script>
+</body>
+</html>

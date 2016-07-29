@@ -1,0 +1,48 @@
+*{
+	padding: 0;
+	margin: 0;
+	font-family: "微软雅黑
+}
+header{
+	padding: 20px 40px;
+	overflow: hidden;
+}
+div.header-left{
+	float: left;
+}
+div.header-left img{
+    width: 30px;
+    height: 30px;
+}
+div.header-left span{
+	font-size: 20px;
+	margin-left: 15px;
+}
+div.header-right{
+	float: right;
+}
+div.header-right a{
+	float: left;
+	text-decoration: none;
+	color: red;
+
+}
+div.header-right a::before{
+	content: '';
+	display: block;
+	width: 20px;
+	height: 20px;
+	background: url(../img/user_icon.png) no-repeat;
+	float: left;
+	margin-right: 10px;
+}
+div.header-right ul{
+	float: left;
+}
+div.header-right li{
+	float: left;
+	padding-right: 20px;
+	list-style: none;
+	color: #C5C1AA;
+}
+

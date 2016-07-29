@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+         body,ul,li{
+         	padding:0;
+         	margin:0;
+         }
+         li{
+         	list-style: none;
+         	box-sizing:border-box;
+         	width:150px;
+         	border: 1px solid #f00;
+         	margin-top: 20px;
+         }
+         ul{
+         	padding:20px;
+         	height:400px;
+         	border: 1px solid #000;
+         	display: flex;
+         	flex-flow:row nowrap;
+            justify-content:space-between;
+            align-content:center;
+            align-items:center;
+         }
+         .flex-item1{
+            height:120px; 
+         }
+         .flex-item2{
+           height:100px; 	
+         }
+         .flex-item3{
+         	height:40px; 
+         }
+         .flex-item4{
+         	height:200px; 
+         	border: 1px solid #00f;
+         }
+         @media(max-width: 640px){
+         	.flex-item4{
+         		order:-1;
+         	}
+         	.flex{
+         	   flex-flow:row wrap;
+         	   align-content:flex-start;
+         	}
+         	
+         }
+	</style>
+</head>
+<body>
+	<ul class="flex">
+		<li class="flex-item1">1</li>
+		<li class="flex-item2">2</li>
+		<li class="flex-item3">3</li>
+		<li class="flex-item4">4</li>
+	</ul>
+</body>
+</html>

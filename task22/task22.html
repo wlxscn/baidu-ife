@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task22</title>
+	<style>
+       #root {
+			display: flex;
+			padding: 20px;
+			width: 1000px;
+			height: 300px;
+			border: 1px solid #000;
+			margin: 100px auto;
+			margin-bottom: 10px;
+			justify-content: space-between;
+		}
+		.child_1 {
+			display: flex;
+			padding: 20px;
+			width: 450px;
+			height: 260px;
+			border: 1px solid red;
+			justify-content: space-between;
+		}
+		.child_2 {
+			display: flex;
+			padding: 20px;
+			width: 170px;
+			height: 220px;
+			border: 1px solid green;
+			justify-content: space-between;
+		}
+		.child_3 {
+			display: flex;
+			padding: 20px;
+			width: 35px;
+			height: 180px;
+			border: 1px solid blue;
+			justify-content: space-between;
+		}
+	</style>
+</head>
+<body>
+	<div id="root">
+		<div class="child_1">
+			<div class="child_2">
+				<div class="child_3"></div>
+				<div class="child_3"></div>
+			</div>
+			<div class="child_2">
+				<div class="child_3"></div>
+				<div class="child_3"></div>
+			</div>
+		</div>
+		<div class="child_1">
+			<div class="child_2">
+				<div class="child_3"></div>
+				<div class="child_3"></div>
+			</div>
+			<div class="child_2">
+				<div class="child_3"></div>
+				<div class="child_3"></div>
+			</div>
+		</div>
+	</div>
+	<button class="preOrder">前序遍历</button>
+	<button class="innerOrder">中序遍历</button>
+	<button class="postOrder">后序遍历</button>
+	<script>
+	   var nodeList=[],rootNode=document.getElementById('root'),timer=null,buttons=document.getElementsByTagName('button');
+	   function preOrder(node){
+         if(node!=null){
+            nodeList.push(node);
+            preOrder(node.firstElementChild);
+            preOrder(node.lastElementChild);
+         }
+	   }
+	   function innerOrder(node){
+	   	if(node!=null){
+	   		innerOrder(node.firstElementChild);
+	   		nodeList.push(node);
+	   		innerOrder(node.lastElementChild);
+	   	}
+	   }
+	   function postOrder(node){
+	   	if(node!=null){
+	   		postOrder(node.firstElementChild);
+	   		postOrder(node.lastElementChild);
+	   		nodeList.push(node);
+	   	}
+	   }
+	   function changeColor(){
+	   	var i=0;
+	   	nodeList[i].style.backgroundColor='blue';
+	   	timer=setInterval(function(){
+           i++;
+          if(i<nodeList.length){
+          	nodeList[i-1].style.backgroundColor='white';
+            nodeList[i].style.backgroundColor='blue';
+          }else{
+          	nodeList[i-1].style.backgroundColor='white';
+          	clearInterval(timer);
+          }
+           
+	   	},500)
+	   }
+
+	   function reset(){
+	   	 nodeList=[];
+	   	 clearInterval(timer);
+	   	 var divs=document.getElementsByTagName('div');
+	   	 for(var i=0;i<divs.length;i++){
+	   	 	divs[i].style.backgroundColor='white';
+	   	 }
+	   }
+      buttons[0].onclick=function(){
+      	  reset();
+	      preOrder(rootNode);
+	      changeColor();
+      }
+       buttons[1].onclick=function(){
+      	  reset();
+	      innerOrder(rootNode);
+	      changeColor();
+      }
+       buttons[2].onclick=function(){
+      	  reset();
+	      postOrder(rootNode);
+	      changeColor();
+      }
+	 
+	</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task_23</title>
+	<style>
+		div {
+			margin: 10px;
+			padding: 5px;
+			border: 1px solid #000;
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+		.root {
+			width: 1500px;
+			height: 600px;
+			margin: 10px auto;
+			flex-wrap: wrap;
+		}
+		.child_1 {
+			height: 260px;
+			min-width: 2s00px;
+		}
+		.child_2 {
+			height: 220px;
+		}
+		.child_3 {
+			height: 180px;
+		}
+		input {
+			height: 40px;
+			font-size: 40px;
+			margin-left: 50px;
+		}
+		
+	</style>
+</head>
+<body>
+	<button>深度优先遍历</button>
+	<button>广度优先遍历</button>
+	<input type="text">
+	<button>深度优先搜索</button>
+	<button>广度优先搜索</button>
+	<div class="root">
+	Super
+		<div class="child_1">
+		Cat
+			<div class="child_2">
+			Apple
+				<div class="child_3">Pear</div>
+				<div class="child_3">Pig</div>
+				<div class="child_3">Comic</div>
+				<div class="child_3">Soccer</div>
+			</div>
+			<div class="child_2">Phone</div>
+			<div class="child_2">
+				<div class="child_3">Book</div>
+				<div class="child_3">School</div>
+			</div>
+		</div>
+		<div class="child_1">
+		Note
+			<div class="child_2">
+			Human
+				<div class="child_3">Code</div>
+				<div class="child_3">Operate</div>
+				<div class="child_3">Man</div>
+			</div>
+			<div class="child_2">
+			Program
+				<div class="child_3">
+				Boment
+					<div class="child_4">Cat</div>
+				</div>
+				<div class="child_3">Glass</div>
+			</div>
+		</div>
+		<div class="child_1">
+			Fish
+		</div>
+	</div>
+<script>
+    var divList=[],index=0;
+	function deepTvs (node) {
+		if(node!=null){
+          divList.push(node);
+          for(var i=0;i<node.children.length;i++){
+          	deepTvs(node.children[i])
+          }
+		}
+	}
+	function wideTvs(node){
+		if(node!=null){
+			divList.push(node);
+			wideTvs(node.nextElementSibling);
+            node=divList[index++];
+            wideTvs(node.firstElementChild);
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>链式调用curry函数</title>
+</head>
+<body>
+	<script>
+
+		var curry=function(fn){
+	      
+	       var args=Array.prototype.slice.call(arguments,1);
+	     
+	       return function(){
+	       	
+	       	  
+	       	 return fn.apply(this,args.concat(Array.prototype.slice.call(arguments,0)));
+	       }
+		}
+		function add(a,b){
+			return a+b;
+		}
+		var addOne=curry(add,1);
+		var value=addOne(2);
+		// console.log(value);
+		var curryApply=function(fn,arr){
+			// console.log(arr);
+			var args=arr.slice(0);
+
+			    args.unshift(fn);
+			    return curry.apply(this,args);//将函数放入第一个参数
+		}
+		var autoCurry=function(fn,n){
+		    function retFn(){
+		    	
+		    	var len=arguments.length;
+		    	var args=Array.prototype.slice.call(arguments,0);
+		    	
+		    	var nextn=n-len;
+		    	if(nextn>0){
+		    		return autoCurry(curryApply(retFn,args),nextn);
+		    	}
+		    	
+		    	return fn.apply(this,args);
+		    }
+		    return retFn;
+		}
+		function compute(a,b,c){
+			return (a+b)*c;
+		}
+		var curryedComputed=autoCurry(compute,3);
+		curryedComputed(1)(2)(3);
+		
+
+	</script>
+	
+		    	
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task18</title>
+	<style>
+	   .wrap div{
+	   	width: 50px;
+	   	height: 50px;
+	   	border: 2px solid #fff;
+	   	background-color:red;
+	   	color: #fff;
+	   	font-size: 20px;
+	   	line-height: 50px;
+	   	text-align: center;
+	   	float: left; 
+	   }
+	</style>
+</head>
+<body>
+	<textarea name="" id="" cols="30" rows="10"></textarea>
+	<button class="left-in">左侧入</button>
+	<button class="right-in">右侧入</button>
+	<button class='left-out'>左侧出</button>
+	<button class="right-out">右侧出</button>
+	<div class="wrap">
+		
+	</div>
+	<script>
+	  (function(){
+          function getByClass(className,parent){
+
+             var parent=parent||document,children=parent.getElementsByTagName('*'),resultChildren=[];
+                 for(var i=0;i<children.length;i++){
+                 	if(children[i].className==className){
+                         resultChildren.push(children[i])
+                 	}
+                 }
+                 return resultChildren;
+          }
+          function createChild(){
+          	if(oInput.value!=''){
+	          	    oDiv=document.createElement('div');
+	          	    oDiv.innerText=oInput.value;
+          	}
+          }
+          var oWrap=getByClass('wrap')[0],
+              oInput=document.getElementsByTagName('input')[0],
+              oDiv;
+         
+          document.onclick=function(e){
+            var target=e.target,wrapChildren=oWrap.children;
+            if(target.className=='left-in'){
+                createChild();
+                if(!oDiv){
+                	return;
+                }
+                if(wrapChildren.length==0){
+                	oWrap.appendChild(oDiv)
+                }else{
+            	    oWrap.insertBefore(oDiv,wrapChildren[0])
+                }
+            }
+            if(target.className=='right-in'){
+            	   createChild();
+            	   oWrap.appendChild(oDiv) 
+            }
+            if(target.className=='left-out'){
+            	  oWrap.removeChild(wrapChildren[0])
+            }
+            if(target.className=='right-out'){
+            	  oWrap.removeChild(wrapChildren[wrapChildren.length-1])
+            }
+            if(target.parentNode.className=='wrap'){
+            	  oWrap.removeChild(target);
+            }
+          }
+	  	})()
+	</script>
+</body>
+</html>

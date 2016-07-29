@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+</html>
+<script>
+//bind方法
+Function.prototype.bind=function(){
+   var args=Array.prototype.slice.call(arguments);
+   var object=args.shift();
+   var fn=this;
+	return function(){
+	  return fn.apply(object,args.concat(Array.prototype.slice.call(arguments)))
+   };
+};
+//curry方法
+Function.prototype.curry=function(){
+	var args=Array.prototype.slice.call(arguments),fn=this;
+	     return function(){
+	     	       
+	     	return fn.apply(this,args.concat(Array.prototype.slice.call(arguments)));
+	     }
+}
+function myFunction(){
+	console.log(arguments);
+}
+myFunction.curry(1,2)(3,4,5,6);
+//particial函数
+Function.prototype.partial=function(){
+	var args=Array.prototype.slice.call(arguments),fn=this;
+	return function(){
+		var arg=0; 
+		for(var i=0;i<args.length&&arg<arguments;i++){
+			if(args[i]==undefined){
+				args[i]=arguments[i++];
+			}
+		}
+		return fn.apply(this,args);
+	}
+}
+String.prototype.csv=String.prototype.split.partial(/,\s+/);
+console.log(("1,2,3").csv());
+//函数的记忆方法
+Function.prototype.memorized=function(key){
+	this._value=this._value||{};
+	return this._value[key]=this._value[key]!==undefined?this._value[key]:this.apply(this,arguments);
+}
+//判断是否为质数的方法
+function (num){
+	var prime=num!=1;
+	for(var i=2;i<num;i++){
+		if(num % i==0){
+			prime=false;
+			break;
+		}
+	}
+      return prime;
+}
+isPrime.memorized(6);
+console.log(isPrime._value[6]);
+//闭包实现缓存记忆
+Function.prototype.memorize=function(){
+	var fn=this;
+	return function(){
+		return fn.memorized.apply(fn,arguments);//将函数执行与存储作为一个整体函数返回
+	}
+}
+var isPrime=(function(num){
+	var prime=num!=1;
+	for(var i=2;i<num;i++){
+		if(num % i==0){
+			prime=false;
+			break;
+		}
+	}
+      return prime;
+}).memorize();
+isPrime(17); 
+</script>

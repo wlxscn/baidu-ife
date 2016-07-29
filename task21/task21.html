@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>task21</title>
+	<style>
+	   #tag-result div,#hobby-result div{
+          float:left;
+          margin: 30px;
+          padding:10px;
+          background: blue;
+          color: #fff;
+	   }
+	   #tag-result{
+	   	 margin-bottom: 100px;
+	   }
+	   input.focus{
+	   	  border: 1px solid blue;
+	   }
+	   #tag-result div:hover,#hobby-result div:hover{
+	   	 background-color:red;
+	   }
+	</style>
+</head>
+<body>
+	<input type="text" id='tag'>
+	<div id='tag-result'></div>
+	<textarea name="" id="hobby" cols="30" rows="10"></textarea><br/>
+	<button id='confirm'>确认输入兴趣爱好</button>
+	<div id='hobby-result'></div>
+    <script>
+       function $(id){
+       	 return document.getElementById(id);
+       }
+       // function Unique(arr){
+       // 	var temp={};
+       //   for(var i=0;i<arr.length;i++){
+       //     if(!temp.hasOwnProperty(arr[i])){
+       //     	temp[arr[i]]='unique';
+       //     }
+       //   }
+       //   console.log(temp);
+       //   var resultArr=[];
+       //   for(var j in temp){
+       //   	resultArr.push(j);
+       //   }   
+       //   return resultArr;
+       // }
+
+       function Tag(id1,id2,id3){
+       	this.resultArr=[];
+       	this.input=$(id1);
+       	this.resultDiv=$(id2);
+       	this.button=$(id3);
+        this.button?this.init('clickEvent'):this.init('keyEvent');  
+       }
+       Tag.prototype.init=function(eventName){
+       	 var self=this,inputName=this.input.TagName;
+       	 this.resultDiv.onmouseover=function(e){
+             e.target.textContent='删除:'+ e.target.textContent
+       	 }
+       	 this.resultDiv.onmouseout=function(e){
+             e.target.textContent= e.target.textContent.replace('删除:','');
+       	 }
+       	 this.resultDiv.onclick=function(e){
+       	 	var node=e.target;
+       	 	var index=[].indexOf.call(node.parentNode.children,node);
+       	 	self.resultArr.splice(index,1);
+       	 	self.render(self.resultArr);
+       	 }
+       	 switch(eventName){
+       	   case 'keyEvent':
+	       	 this.input.onkeyup=function(e){
+	                var value=self.check(e);
+	                if(value!=undefined){
+	                    
+	                	if(!self.repeat(value)){
+	                	  self.resultArr.push(value);
+	                	  if(self.resultArr.length>10){
+	                	  	 self.resultArr.shift();
+	                	  }	
+	                	  self.render(self.resultArr);
+	                	}
+	                }
+	      
+	       	 }
+	       	 break;
+	       case 'clickEvent':
+	         this.button.onclick=function(e){
+                 var valueArr=self.check(e);
+	              for(var j=0;j<valueArr.length;j++){
+                      if(!self.repeat(valueArr[j])){
+	                	  self.resultArr.push(valueArr[j]);
+	                	  if(self.resultArr.length>10){
+	                	  	self.resultArr.shift();
+	                	  }	
+	                	  self.render(self.resultArr);
+	                	}
+	                   
+	             }	 
+	        }
+	     }
+       }
+       Tag.prototype.check=function(e){
+       	var value=this.input.value;
+       	if(!this.button){
+       		if(/,| |，$/.test(value)||e.keyCode===13){
+       	      return this.input.value.match(/(^[^,\， ]*)/)[0];
+       	    }
+       	}else{
+       		
+       			 return this.input.value.trim().split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/).filter(function(d){return d != '';});
+       		
+       	}
+       	
+       }
+       Tag.prototype.repeat=function(data){
+       	for(var i=0;i<this.resultDiv.children.length;i++){
+       		if(this.resultDiv.children[i].textContent.localeCompare(data)==0){
+       			this.input.value='';
+       			return true;
+       		}
+       	}
+       }
+       Tag.prototype.render=function(arr){
+         this.resultDiv.innerHTML=arr.map(function(item){
+         	return '<div>'+item+'</div>'
+         }).join('');
+         this.input.value='';
+       }
+       new Tag('tag','tag-result');
+       new Tag('hobby','hobby-result','confirm');
+    </script>
+</body>
+</html>

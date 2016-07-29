@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Task 20</title>
+  <style>
+    #result div {
+      margin: 10px;
+      padding: 5px;
+      background-color: red;
+      text-align: center;
+      float: left;
+      color: white;
+      font-weight: bold;
+    }
+    .select {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <textarea id="input"></textarea>
+    <button id="left-in">左侧入</button>
+    <button id="right-in">右侧入</button>
+    <button id="left-out">左侧出</button>
+    <button id="right-out">右侧出</button>
+    <input id="search-text" />
+    <button id="search">查询</button>
+  </div>
+  <div id="result"></div>
+   <script type="text/javascript">
+    $ = function(el) {
+        return document.querySelector(el);
+    }
+    var arrData = [];
+  
+   
+    function render(str) {
+        $('#result').innerHTML = arrData.map(function(d) {
+            if (str != null && str.length > 0) {
+                d = d.replace(new RegExp(str, "g"), "<span class='select'>" + str + "</span>");
+            }
+            return '<div>' + d + '</div>';
+        }).join('');
+    }
+    function deal(fun,succ){
+       var args=[].slice.call(arguments,2);
+           return function(e){
+           	 var arg=args.map(function(item){
+                return typeof item==='function'?item(e):item
+           	 })
+           	 if(Object.prototype.toString.call(arg[0])==='[object Array]'){
+                 arg[0].forEach(function(d){
+                 fun.apply(arrData,[d].concat(arg.slice(1)));
+                 })
+           	 }else{
+           	 	var result=fun.apply(arrData,arg)
+           	 }
+           	 if(succ!=null){
+           	 	succ(result);
+           	 }
+           	 render();
+           }
+    }
+     function getInputValue() {
+      return $('#input').value.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/).filter(function(d){return d != '';});
+    }
+    function getClickIndex(e) {
+      var node = e.target;
+      if (node.id == "result") throw new Error('');
+      return [].indexOf.call(node.parentNode.children, node);
+    }
+    $('#left-in').onclick = deal([].unshift, null, getInputValue);
+    $('#right-in').onclick = deal([].push, null, getInputValue);
+    $('#left-out').onclick = deal([].shift, window.alert);
+    $('#right-out').onclick = deal([].pop, window.alert);
+    $('#result').onclick = deal([].splice, null, getClickIndex, 1);
+    $('#search').onclick = function(){
+      render($('#search-text').value);
+    }
+    </script>
+</body>
+
+</html>
